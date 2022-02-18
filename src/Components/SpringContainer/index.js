@@ -1,3 +1,4 @@
+import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { useTransition } from "react-spring";
 import AnimatedItem from "../AnimatedItem";
 import "./index.css";
@@ -5,7 +6,7 @@ import "./index.css";
 const from = {
   width: 10,
   height: 10,
-  x: -100,
+  x: 0,
   y: 800,
   opacity: 0,
 };
@@ -20,7 +21,7 @@ const enter = (item) => async (next) => {
   await next({
     width: 100,
     height: 100,
-    x: 0,
+    x: item.endX,
   });
 };
 
@@ -41,7 +42,16 @@ const SpringContainer = ({ items }) => {
 
   return (
     <div className="spring-container">
-      {transition((style, item) => item && <AnimatedItem style={style} />)}
+      <Parallax pages={2}>
+        {transition(
+          (style, item) =>
+            item && (
+              <ParallaxLayer speed={(Math.random() - 0.5) * 5}>
+                <AnimatedItem style={style} />
+              </ParallaxLayer>
+            )
+        )}
+      </Parallax>
     </div>
   );
 };
