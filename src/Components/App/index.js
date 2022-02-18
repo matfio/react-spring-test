@@ -1,21 +1,28 @@
 import { useState } from "react";
-import Item from "../Item";
-import Container from "../Container";
+import SpringContainer from "../SpringContainer";
 import "./index.css";
 
+const itemArray = [
+  {
+    y: -80,
+    delay: 0,
+    exitX: -100,
+  },
+  { y: 0, delay: 200, exitX: -200 },
+  { y: 80, delay: 400, exitX: -300 },
+];
+
 const App = () => {
-  const [isMounted, setIsMounted] = useState(false);
+  const [items, setItems] = useState([]);
 
   const doMount = () => {
-    setIsMounted((mounted) => !mounted);
+    setItems((items) => (items?.length ? [] : itemArray));
   };
 
   return (
     <div className="App">
       <button onClick={doMount}>Mount</button>
-      <Container>
-        <Item isVisible={isMounted} />
-      </Container>
+      <SpringContainer items={items} />
     </div>
   );
 };
